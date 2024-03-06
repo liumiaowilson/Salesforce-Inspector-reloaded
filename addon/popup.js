@@ -85,6 +85,7 @@ class App extends React.PureComponent {
     this.onChangeApi = this.onChangeApi.bind(this);
     this.onContextRecordChange = this.onContextRecordChange.bind(this);
     this.updateReleaseNotesViewed = this.updateReleaseNotesViewed.bind(this);
+    this.clickAuthorize = this.clickAuthorize.bind(this);
   }
   onContextRecordChange(e) {
     let {sfHost} = this.props;
@@ -126,6 +127,9 @@ class App extends React.PureComponent {
       latestNotesViewed: true
     });
   }
+    clickAuthorize() {
+        // TODO
+    }
   onShortcutKey(e) {
     const refs = this.refs;
     const actionMap = {
@@ -253,6 +257,9 @@ class App extends React.PureComponent {
         h("div", {className: "main", id: "mainTabs"},
           h(AllDataBox, {ref: "showAllDataBox", sfHost, showDetailsSupported: !inLightning && !inInspector, linkTarget, contextUrl, onContextRecordChange: this.onContextRecordChange, isFieldsPresent}),
           h("div", {className: "slds-p-vertical_x-small slds-p-horizontal_x-small slds-border_bottom"},
+            h("div", {className: "slds-m-bottom_xx-small"},
+                h("a", {ref: "authorizeBtn", className: "page-button slds-button slds-button_neutral", onClick: () => this.clickAuthorize(), }, h("span", {}, "Authorize"))
+            ),
             h("div", {className: "slds-m-bottom_xx-small"},
               h("a", {ref: "dataExportBtn", href: exportHref, target: linkTarget, className: "page-button slds-button slds-button_neutral"}, h("span", {}, "Data ", h("u", {}, "E"), "xport"))
             ),
