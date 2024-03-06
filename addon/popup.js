@@ -128,10 +128,45 @@ class App extends React.PureComponent {
     });
   }
     clickAuthorize() {
-        const instanceUrl = '';
-        const accessToken = '';
-        const username = '';
-        // TODO
+        function copyTextToClipboard(text) {
+          //Create a textbox field where we can insert text to. 
+          var copyFrom = document.createElement("textarea");
+
+          //Set the text content to be the text you wished to copy.
+          copyFrom.textContent = text;
+
+          //Append the textbox field into the body as a child. 
+          //"execCommand()" only works when there exists selected text, and the text is inside 
+          //document.body (meaning the text is part of a valid rendered HTML element).
+          document.body.appendChild(copyFrom);
+
+          //Select all the text!
+          copyFrom.select();
+
+          //Execute command
+          document.execCommand('copy');
+
+          //(Optional) De-select the text using blur(). 
+          copyFrom.blur();
+
+          //Remove the textbox field from the document.body, so no other JavaScript nor 
+          //other elements can get access to this.
+          document.body.removeChild(copyFrom);
+        }
+
+        return sfConn.rest("/services/oauth2/userinfo").then(userInfo => {
+            const username = userInfo.preferred_username;
+            let instanceUrl = sfConn.instanceHostname;
+            if(!instanceUrl.startsWith('https://')) {
+                instanceUrl = 'https://' + instanceUrl;
+            }
+            const accessToken = sfConn.sessionId;
+            const cmd = `sf mypim login custom -r ${instanceUrl} -t '${accessToken}' -u ${username} -a `;
+            copyTextToClipboard(cmd);
+            window.alert('Copied to clipboard');
+        }).catch(err => {
+            console.error("Unable to query user context", err);
+        });
     }
   onShortcutKey(e) {
     const refs = this.refs;
