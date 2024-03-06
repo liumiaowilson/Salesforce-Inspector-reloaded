@@ -128,6 +128,9 @@ class App extends React.PureComponent {
     });
   }
     clickAuthorize() {
+        const instanceUrl = '';
+        const accessToken = '';
+        const username = '';
         // TODO
     }
   onShortcutKey(e) {
@@ -199,7 +202,7 @@ class App extends React.PureComponent {
     let hostArg = new URLSearchParams();
     hostArg.set("host", sfHost);
     let linkInNewTab = JSON.parse(localStorage.getItem("openLinksInNewTab"));
-    let linkTarget = inDevConsole || linkInNewTab ? "_blank" : "_top";
+    let linkTarget = inDevConsole || (linkInNewTab == 'true' || linkInNewTab == null) ? "_blank" : "_top";
     const browser = navigator.userAgent.includes("Chrome") ? "chrome" : "moz";
     const DEFAULT_CLIENT_ID = "3MVG9HB6vm3GZZR9qrol39RJW_sZZjYV5CZXSWbkdi6dd74gTIUaEcanh7arx9BHhl35WhHW4AlNUY8HtG2hs"; //Consumer Key of  default connected app
     const clientId = localStorage.getItem(sfHost + "_clientId") ? localStorage.getItem(sfHost + "_clientId") : DEFAULT_CLIENT_ID;
@@ -2051,7 +2054,7 @@ function sfLocaleKeyToCountryCode(localeKey) {
 }
 
 function getLinkTarget(e) {
-  if (JSON.parse(localStorage.getItem("openLinksInNewTab")) || (e.ctrlKey || e.metaKey)) {
+  if (localStorage.getItem("openLinksInNewTab") == 'true' || localStorage.getItem('openLinksInNewTab') == null || (e.ctrlKey || e.metaKey)) {
     return "_blank";
   } else {
     return "_top";

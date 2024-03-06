@@ -1065,7 +1065,7 @@ class App extends React.Component {
     let {model} = this.props;
     document.title = model.title();
     let linkInNewTab = localStorage.getItem("openLinksInNewTab");
-    let linkTarget = linkInNewTab ? "_blank" : "_top";
+    let linkTarget = linkInNewTab == 'true' || linkInNewTab == null ? "_blank" : "_top";
     return (
       h("div", {},
         h("div", {className: "object-bar"},

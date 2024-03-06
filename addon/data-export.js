@@ -1330,7 +1330,7 @@ class App extends React.Component {
 }
 
 function getLinkTarget(e) {
-  if (localStorage.getItem("openLinksInNewTab") == "true" || (e.ctrlKey || e.metaKey)) {
+  if (localStorage.getItem("openLinksInNewTab") == null || localStorage.getItem("openLinksInNewTab") == "true" || (e.ctrlKey || e.metaKey)) {
     return "_blank";
   } else {
     return "_top";
